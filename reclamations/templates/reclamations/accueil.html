@@ -1,0 +1,287 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accueil - ARTEC</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #263449;
+        }
+
+        header {
+            background: #123c69;
+            color: white;
+            padding: 22px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        header h2 {
+            margin: 0;
+            font-size: 30px;
+            letter-spacing: 2px;
+        }
+
+        header p {
+            margin: 8px 0 0;
+            font-size: 13px;
+            color: #dce8f7;
+        }
+
+        .login-btn {
+            display: inline-block;
+            padding: 12px 22px;
+            background: white;
+            color: #123c69;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #dce8f7;
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            max-width: 1150px;
+            margin: 65px auto;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 9px 16px;
+            border-radius: 25px;
+            background: #dceaff;
+            color: #123c69;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        h1 {
+            margin: 25px 0 15px;
+            color: #123c69;
+            font-size: clamp(30px, 5vw, 46px);
+            line-height: 1.2;
+        }
+
+        .description {
+            max-width: 680px;
+            margin: 0 auto;
+            color: #627084;
+            font-size: 17px;
+            line-height: 1.8;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 45px;
+        }
+
+        .card {
+            background: white;
+            width: 330px;
+            max-width: 100%;
+            padding: 30px 25px;
+            border-radius: 14px;
+            box-shadow: 0 5px 22px rgba(18, 60, 105, 0.08);
+            border: 1px solid #e7edf5;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 28px rgba(18, 60, 105, 0.13);
+        }
+
+        .icon {
+            font-size: 35px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            color: #123c69;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: #627084;
+            line-height: 1.6;
+            min-height: 50px;
+        }
+
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 14px 18px;
+            margin-top: 15px;
+            background: #123c69;
+            color: white;
+            text-decoration: none;
+            border-radius: 7px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #0b2745;
+            transform: translateY(-2px);
+        }
+
+        .secondary {
+            background: white;
+            color: #123c69;
+            border: 2px solid #123c69;
+        }
+
+        .secondary:hover {
+            background: #eaf1fa;
+        }
+
+        .dashboard {
+            background: #198754;
+        }
+
+        .dashboard:hover {
+            background: #146c43;
+        }
+
+        .tracking {
+            background: #0d9488;
+        }
+
+        .tracking:hover {
+            background: #0f766e;
+        }
+
+        footer {
+            margin-top: 60px;
+            padding: 25px 15px;
+            text-align: center;
+            background: #123c69;
+            color: #dce8f7;
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                text-align: center;
+                justify-content: center;
+            }
+
+            .hero {
+                margin: 35px auto;
+            }
+
+            .card {
+                width: 100%;
+            }
+
+            .login-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div>
+            <h2>ARTEC</h2>
+            <p>Autorité de Régulation des Technologies de Communication</p>
+        </div>
+
+        <a href="/admin/login/" class="login-btn">Connexion</a>
+    </header>
+
+    <main class="hero">
+        <span class="badge">PLATEFORME OFFICIELLE DE RÉCLAMATIONS</span>
+
+        <h1>Bienvenue sur la plateforme ARTEC</h1>
+
+        <p class="description">
+            Une plateforme dédiée à la réception et au suivi des
+            réclamations concernant les services de télécommunications.
+            Exprimez votre problème simplement et retrouvez vos démarches.
+        </p>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="icon">📝</div>
+                <h3>Déposer une réclamation</h3>
+                <p>
+                    Signalez un problème concernant votre opérateur
+                    téléphonique ou votre connexion Internet.
+                </p>
+                <a class="btn" href="/reclamation/">
+                    Déposer une réclamation
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="icon">🔎</div>
+                <h3>Suivre ma réclamation</h3>
+                <p>
+                    Retrouvez l'état d'avancement de votre dossier
+                    grâce à la référence reçue après son dépôt.
+                </p>
+                <a class="btn tracking" href="/suivi/">
+                    Suivre ma réclamation
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="icon">📋</div>
+                <h3>Consulter les réclamations</h3>
+                <p>
+                    Accédez à l'espace de consultation pour retrouver
+                    les réclamations selon vos autorisations.
+                </p>
+                <a class="btn secondary" href="/liste-reclamations/">
+                    Consulter les réclamations
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="icon">📊</div>
+                <h3>Tableau de bord ARTEC</h3>
+                <p>
+                    Consultez les statistiques globales et suivez
+                    l'évolution des réclamations reçues.
+                </p>
+                <a class="btn dashboard" href="/tableau-bord/">
+                    Accéder au tableau de bord
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 ARTEC — Plateforme de gestion des réclamations
+    </footer>
+
+</body>
+</html>

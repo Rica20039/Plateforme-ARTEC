@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Envoyer un Dataset - ARTEC</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h1 { color: #333; }
+        .messages { list-style: none; padding: 0; }
+        .messages li { padding: 10px; margin-bottom: 10px; border-radius: 4px; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        form { margin-top: 20px; }
+        input[type="file"] { display: block; margin-bottom: 15px; }
+        button { background: #007bff; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bienvenue Opérateur : {{ operateur }}</h1>
+        <p>Envoyez votre fichier <b>Excel (.xlsx)</b> ou <b>CSV</b> pour que l'Intelligence Artificielle l'analyse.</p>
+
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="{{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" name="fichier" accept=".csv, .xlsx" required>
+            <button type="submit">Envoyer à l'ARTEC</button>
+        </form>
+
+        <hr>
+        <h2>Vos derniers envois</h2>
+        <table>
+            <tr>
+                <th>Date</th>
+                <th>Fichier</th>
+                <th>Analysé par l'IA ?</th>
+            </tr>
+            {% for ds in datasets %}
+            <tr>
+                <td>{{ ds.date_upload|date:"d/m/Y H:i" }}</td>
+                <td>{{ ds.fichier.name }}</td>
+                <td>{{ ds.traite|yesno:"Oui ✅,En attente ⏳" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">Aucun fichier envoyé pour le moment.</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi de réclamation - ARTEC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            padding: 30px 15px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px #0001;
+        }
+        h1 { color: #123b70; }
+        input, button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 12px;
+            box-sizing: border-box;
+            border-radius: 7px;
+        }
+        input { border: 1px solid #ccc; }
+        button {
+            background: #123b70;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .erreur { color: #c62828; }
+        .resultat {
+            margin-top: 20px;
+            padding: 15px;
+            background: #eef5ff;
+            border-radius: 8px;
+        }
+        a { color: #123b70; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Suivre ma réclamation</h1>
+        <p>Saisissez la référence reçue après le dépôt de votre réclamation.</p>
+
+        <form method="post">
+            {% csrf_token %}
+            <input
+                type="text"
+                name="reference"
+                placeholder="Votre référence de suivi"
+                required
+            >
+            <button type="submit">Rechercher</button>
+        </form>
+
+        {% if erreur %}
+            <p class="erreur">{{ erreur }}</p>
+        {% endif %}
+
+        {% if reclamation %}
+            <div class="resultat">
+                <h2>Résultat du suivi</h2>
+                <p><strong>Référence :</strong> {{ reclamation.reference }}</p>
+                <p><strong>Sujet :</strong> {{ reclamation.sujet }}</p>
+                <p><strong>Opérateur :</strong> {{ reclamation.get_operateur_display }}</p>
+                <p><strong>Date :</strong> {{ reclamation.date_creation|date:"d/m/Y H:i" }}</p>
+                <p><strong>Statut :</strong> {{ reclamation.statut }}</p>
+            </div>
+        {% endif %}
+
+        <p><a href="{% url 'accueil' %}">Retour à l'accueil</a></p>
+    </div>
+</body>
+</html>
