@@ -1,82 +1,46 @@
+{% extends 'qos_engine/base.html' %}
 
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suivi de réclamation - ARTEC</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f4f8;
-            margin: 0;
-            padding: 30px 15px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px #0001;
-        }
-        h1 { color: #123b70; }
-        input, button {
-            width: 100%;
-            padding: 13px;
-            margin-top: 12px;
-            box-sizing: border-box;
-            border-radius: 7px;
-        }
-        input { border: 1px solid #ccc; }
-        button {
-            background: #123b70;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        .erreur { color: #c62828; }
-        .resultat {
-            margin-top: 20px;
-            padding: 15px;
-            background: #eef5ff;
-            border-radius: 8px;
-        }
-        a { color: #123b70; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Suivre ma réclamation</h1>
-        <p>Saisissez la référence reçue après le dépôt de votre réclamation.</p>
+{% block title %}Suivre ma réclamation{% endblock %}
 
-        <form method="post">
-            {% csrf_token %}
-            <input
-                type="text"
-                name="reference"
-                placeholder="Votre référence de suivi"
-                required
-            >
-            <button type="submit">Rechercher</button>
-        </form>
+{% block content %}
+<style>
+    .container-suivi { max-width: 600px; margin: 40px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+    .container-suivi h1 { color: #333; text-align: center; margin-bottom: 10px; }
+    .container-suivi p { text-align: center; color: #666; margin-bottom: 25px; }
+    .form-group { margin-bottom: 20px; }
+    .form-control { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; box-sizing: border-box; }
+    .btn-submit { background: #007bff; color: white; border: none; padding: 12px; font-size: 16px; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; }
+    .btn-submit:hover { background: #0056b3; }
+    .error-msg { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 4px; margin-bottom: 20px; text-align: center; }
+    
+    .result-card { background: #f8f9fa; border-left: 5px solid #28a745; padding: 20px; border-radius: 4px; margin-top: 20px; }
+    .result-card h3 { margin-top: 0; color: #333; }
+</style>
 
-        {% if erreur %}
-            <p class="erreur">{{ erreur }}</p>
-        {% endif %}
+<div class="container-suivi">
+    <h1>Suivre ma réclamation</h1>
+    <p>Saisissez la référence reçue après le dépôt de votre réclamation.</p>
 
-        {% if reclamation %}
-            <div class="resultat">
-                <h2>Résultat du suivi</h2>
-                <p><strong>Référence :</strong> {{ reclamation.reference }}</p>
-                <p><strong>Sujet :</strong> {{ reclamation.sujet }}</p>
-                <p><strong>Opérateur :</strong> {{ reclamation.get_operateur_display }}</p>
-                <p><strong>Date :</strong> {{ reclamation.date_creation|date:"d/m/Y H:i" }}</p>
-                <p><strong>Statut :</strong> {{ reclamation.statut }}</p>
-            </div>
-        {% endif %}
+    {% if erreur %}
+        <div class="error-msg">{{ erreur }}</div>
+    {% endif %}
 
-        <p><a href="{% url 'accueil' %}">Retour à l'accueil</a></p>
-    </div>
-</body>
-</html>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <input type="text" name="reference" class="form-control" placeholder="Ex: 550e8400-e29b-41d4-a716-446655440000" required>
+        </div>
+        <button type="submit" class="btn-submit">Rechercher mon dossier</button>
+    </form>
+
+    {% if reclamation %}
+        <div class="result-card">
+            <h3>Détails de la réclamation</h3>
+            <p><strong>Opérateur :</strong> {{ reclamation.operateur }}</p>
+            <p><strong>Sujet :</strong> {{ reclamation.sujet }}</p>
+            <p><strong>Statut actuel :</strong> <span style="font-weight:bold; color: #d35400;">{{ reclamation.statut }}</span></p>
+            <p><strong>Date de dépôt :</strong> {{ reclamation.date_creation|date:"d/m/Y à H:i" }}</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

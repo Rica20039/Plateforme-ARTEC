@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <title>{% block title %}ARTEC Plateforme{% endblock %}</title>
     <style>
-        /* Styles globaux */
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f7f6; margin: 0; padding: 0; }
         
         /* Barre de navigation (Navbar) */
         .navbar { background: #1a252f; color: white; display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
         .navbar-brand { font-size: 22px; font-weight: bold; color: white; text-decoration: none; letter-spacing: 1px; }
-        .nav-links { display: flex; gap: 15px; align-items: center; }
+        .nav-links { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
         .nav-links a { color: #b8c7ce; text-decoration: none; font-weight: bold; font-size: 14px; padding: 8px 12px; border-radius: 4px; transition: 0.3s; }
         .nav-links a:hover { background: #34495e; color: white; }
         
@@ -24,25 +23,30 @@
 </head>
 <body>
 
-    <!-- Barre de navigation dynamique -->
     <nav class="navbar">
         <a href="{% url 'avis_public' %}" class="navbar-brand">🌐 ARTEC Platform</a>
         
         <div class="nav-links">
+            <!-- Liens toujours visibles -->
             <a href="{% url 'avis_public' %}">Accueil Public</a>
             <a href="{% url 'participer_sondages' %}">Sondages Citoyens</a>
             
+            <!-- ON CACHE CES DEUX BOUTONS SI L'UTILISATEUR EST CONNECTÉ -->
+            {% if not user.is_authenticated %}
+                <a href="{% url 'creer_reclamation' %}" style="color: #f1c40f;">📝 Déposer une réclamation</a>
+                <a href="{% url 'suivi_reclamation' %}" style="color: #f1c40f;">🔍 Suivre ma réclamation</a>
+            {% endif %}
+
+            <!-- MENU POUR LES CONNECTÉS -->
             {% if user.is_authenticated %}
-                <!-- Menu pour l'ARTEC -->
                 {% if user.is_superuser or user.groups.all.0.name == 'ARTEC' %}
                     <a href="{% url 'dashboard_artec' %}">Dashboard ARTEC</a>
-                <!-- Menu pour les Opérateurs -->
                 {% elif user.groups.all.0.name in 'YAS,Orange,Airtel' %}
                     <a href="{% url 'dashboard_operateur' %}">Mon Dashboard</a>
                 {% endif %}
                 
                 <a href="{% url 'boite_reception' %}">💬 Messagerie</a>
-                <a href="{% url 'liste_reclamations' %}">📝 Réclamations</a>
+                <a href="{% url 'liste_reclamations' %}">📋 Gérer les réclamations</a>
                 <a href="{% url 'gerer_sondages' %}">📊 Sondages</a>
                 
                 <!-- Déconnexion avec séparation visuelle -->
@@ -50,15 +54,14 @@
                     {% csrf_token %}
                     <button type="submit" class="btn-logout">Déconnexion</button>
                 </form>
-                
             {% else %}
-                <!-- Si non connecté (Public) -->
-                <a href="{% url 'login' %}">Connexion</a>
+                <!-- Lien de connexion pour le public -->
+                <a href="{% url 'login' %}" style="background: #007bff; color: white;">Connexion</a>
             {% endif %}
         </div>
     </nav>
 
-    <!-- Les messages d'erreur ou de succès apparaîtront ici automatiquement -->
+    <!-- Les messages d'erreur ou de succès apparaîtront ici -->
     <div class="main-content">
         {% if messages %}
             <ul style="list-style:none; padding:0;">
