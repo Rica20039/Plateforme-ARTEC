@@ -22,3 +22,16 @@ python -m venv .venv
 
 # Installer les librairies (Important : installer manuellement pour éviter les conflits de versions)
 pip install django tensorflow pandas openpyxl scikit-learn joblib
+## 🔑 Comptes de test (Déjà configurés dans la base de données)
+
+Pour faciliter la correction, la base de données est déjà fournie avec des comptes et des données de démonstration prêts à l'emploi. **Vous n'avez pas besoin de créer un compte administrateur ni de faire de migrations.**
+
+Voici les identifiants pour tester la plateforme (allez sur `/login/`) :
+
+*   **Compte ARTEC (Régulateur) :**
+    *   Nom d'utilisateur : `admin` (remplace par ton vrai nom d'utilisateur)
+    *   Mot de passe : `rica2003` (remplace par ton vrai mot de passe)
+
+*   **Compte Opérateur (ex: Orange) :**
+    *   Nom d'utilisateur : `orange_test` (remplace par ton vrai nom d'utilisateur opérateur)
+    *   Mot de passe : `org12345678` (remplace par ton vrai mot de passe)
